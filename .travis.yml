@@ -1,1 +1,9 @@
-language: c#
+language: csharp
+solution: Bip39.sln
+mono: none
+dotnet: 3.0.100
+
+script:
+  - dotnet restore
+  - dotnet build
+  - dotnet test ./Bip39.Tests/Bip39.Tests.csproj
