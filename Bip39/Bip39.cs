@@ -1,31 +1,51 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace CAPSLOCKGANG
 {
     /// <summary>
     /// Bip39 mnemonic phrase generator and verifier
+    /// <para>
+    ///     <see href="https://github.com/geckiss/PA193_mnemonic_CAPSLOCKGANG"/>
+    /// </para>
     /// </summary>
     public class Bip39
     {
-        private readonly ICollection<string> wordList;
+        private readonly IList<string> wordList;
 
-        public Bip39() : this(new List<string>()) // TODO: use some default wordlist
+        private readonly Encoding encoding;
+
+        public Bip39(IList<string> wordList) : this(wordList, Encoding.UTF8)
         {
         }
 
-        public Bip39(ICollection<string> wordList)
+        public Bip39(IList<string> wordList, Encoding encoding)
         {
             if (wordList == null)
             {
                 throw new ArgumentNullException(nameof(wordList));
             }
+            if (encoding == null)
+            {
+                throw new ArgumentNullException(nameof(encoding));
+            }
+
+            // fix wordlist
+            wordList = wordList.Select(line => line.Trim())
+                               .Where(line => line.Length > 0) 
+                               //.OrderBy(line => line)
+                               .ToList();
+
             if (wordList.Count != 2048)
             {
                 // TODO: throw exception or?
             }
 
             this.wordList = wordList;
+            this.encoding = encoding;
         }
 
         public SeedPhraseResult GenerateSeedAndPhrase(string entropy)

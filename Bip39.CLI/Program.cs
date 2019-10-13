@@ -1,10 +1,14 @@
-﻿namespace CAPSLOCKGANG.CLI
+﻿using System.IO;
+
+namespace CAPSLOCKGANG.CLI
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            Bip39 bip39 = new Bip39();
+            string[] wordList = File.ReadAllLines("english.txt");
+
+            Bip39 bip39 = new Bip39(wordList);
 
             var seedAndEntropy = bip39.GenerateSeedAndEntropy("ozone drill grab fiber curtain grace pudding thank cruise elder eight picnic");
 
