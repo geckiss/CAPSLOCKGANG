@@ -14,7 +14,8 @@ namespace CAPSLOCKGANG.Tests
         [SetUp]
         public void Setup()
         {
-            wordList = File.ReadAllLines(@"..\..\..\english.txt");
+            string path = Path.Combine("..", "..", "..", "english.txt");
+            wordList = File.ReadAllLines(path);
         }
 
         [Test]
